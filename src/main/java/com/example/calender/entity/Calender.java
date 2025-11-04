@@ -43,5 +43,26 @@ public class Calender extends BaseEntity {
         this.calPwd = calPwd;
     }
 
+    /**
+     * setter
+     * 수정 가능한 필드만 반영하도록 update 메서드 구현
+     * @param newUserName
+     * @param newCalTitle
+     */
+    public void updateForTitleAndUser(String newUserName, String newCalTitle) {
+        if (newUserName != null && !newUserName.isBlank()) {
+            this.userName = newUserName;
+        }
+        if (newCalTitle != null && !newCalTitle.isBlank()) {
+            this.calTitle = newCalTitle;
+        }
+    }
 
+    // 비밀번호 검증
+    public boolean isPasswordMatch(Integer rawPwd) {
+        if (this.calPwd == null || rawPwd == null) {
+            return false;
+        }
+        return this.calPwd.equals(rawPwd);
+    }
 }

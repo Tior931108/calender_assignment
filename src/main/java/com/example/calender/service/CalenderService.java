@@ -89,4 +89,34 @@ public class CalenderService {
                 calender.getModifiedAt()
         );
     }
+
+    // 수정
+    @Transactional
+    public UpdateCalenderResponse updateCalender(Long id, UpdateCalenderRequest updateCalenderRequest) {
+        Calender calender = calenderRepository.findById(id).orElseThrow(
+                () -> new IllegalStateException("존재하지 않는 일정입니다.")
+        );
+
+        // 비밀번호 검증
+        if (!calender.isPasswordMatch(updateCalenderRequest.getCalPwd())) {
+            throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
+        }
+
+        // 요구사항:  작성일(createdAt)은 변경 불가. modifiedAt 는 Auditing에 의해 자동 갱신.
+        calender.updateForTitleAndUser(updateCalenderRequest.getUserName(), updateCalenderRequest.getCalTitle());
+
+        // 응답 DTO
+        return new UpdateCalenderResponse(
+                calender.getId(),
+                calender.getUserName(),
+                calender.getCalTitle(),
+                calender.getCalContent(),
+                calender.getCreatedAt(),
+                calender.getModifiedAt()
+        );
+    }
+
+
+
+
 }

@@ -32,4 +32,13 @@ public class CalenderController {
     public GetOneCalenderResponse getOneCalender(@PathVariable Long id) {
         return calenderService.getOneCalender(id);
     }
+
+    // 수정
+    @PutMapping("/calenders/{id}")
+    public UpdateCalenderResponse updateCalender(
+            @PathVariable Long id,
+            @RequestBody UpdateCalenderRequest updateCalenderRequest
+    ) {
+        return calenderService.updateCalender(id, updateCalenderRequest);
+    }
 }
