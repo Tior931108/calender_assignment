@@ -2,6 +2,7 @@ package com.example.calender.service;
 
 import com.example.calender.dto.CreateCalenderRequest;
 import com.example.calender.dto.CreateCalenderResponse;
+import com.example.calender.dto.GetUserNameCalenderRequest;
 import com.example.calender.dto.GetUserNameCalenderResponse;
 import com.example.calender.entity.Calender;
 import com.example.calender.repository.CalenderRepository;
@@ -9,8 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -43,5 +46,33 @@ public class CalenderService {
                 savedCalender.getModifiedAt()
         );
 
+    }
+
+    // 전체 조회 (작성자명 필터링)
+    @Transactional(readOnly = true)
+    public List<GetUserNameCalenderResponse> findAll(String userName) {
+        List<Calender> calenders;
+
+        if(userName != null && !userName.isEmpty()) {
+            // 작성자명으로 필터링
+            calenders = calenderRepository.findByUserNameOrderByModifiedAtDesc(userName);
+        } else {
+            // 전체 조회
+            calenders = calenderRepository.findAllByOrderByModifiedAtDesc();
+        }
+
+        List<GetUserNameCalenderResponse> dtos = new ArrayList<>();
+        for (Calender calender : calenders) {
+            GetUserNameCalenderResponse dto = new GetUserNameCalenderResponse(
+                    calender.getId(),
+                    calender.getUserName(),
+                    calender.getCalTitle(),
+                    calender.getCalContent(),
+                    calender.getCreatedAt(),
+                    calender.getModifiedAt()
+            );
+            dtos.add(dto);
+        }
+        return dtos;
     }
 }
