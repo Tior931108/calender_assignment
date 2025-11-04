@@ -4,8 +4,13 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "calenders")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,6 +27,20 @@ public class Calender extends BaseEntity {
     private String calContent;
     @Column(nullable = false)
     private Integer calPwd;
+
+    // 양방향 매핑
+    @OneToMany(mappedBy = "calender", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+    // 댓글 개수 확인 (10개 제한)
+    public int getCommentCount() {
+        return comments.size();
+    }
+
+    // 댓글이 10개 미만인지 확인
+    public boolean canAddComment() {
+        return comments.size() < 10;
+    }
 
     // 작성자 이름으로 조회할때 사용
     public Calender(String userName) {
@@ -65,4 +84,5 @@ public class Calender extends BaseEntity {
         }
         return this.calPwd.equals(rawPwd);
     }
+
 }
