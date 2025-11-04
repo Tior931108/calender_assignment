@@ -116,7 +116,16 @@ public class CalenderService {
         );
     }
 
+    // 삭제
+    @Transactional
+    public void deleteCalender(Long id, DeleteCalPwdRequest deleteCalPwd) {
+        Calender calender = calenderRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 일정입니다. id=" + id));
 
+        if (!calender.isPasswordMatch(deleteCalPwd.getCalPwd())) {
+            throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
+        }
 
-
+        calenderRepository.delete(calender);
+    }
 }

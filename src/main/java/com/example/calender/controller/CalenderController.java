@@ -41,4 +41,16 @@ public class CalenderController {
     ) {
         return calenderService.updateCalender(id, updateCalenderRequest);
     }
+
+
+    // 삭제
+    // @RequestParam 사용시, URL에 비밀번호 노출 가능성 증가
+    // 보안성을 위해서 @RequestBody 사용
+    @DeleteMapping("/calenders/{id}")
+    public void deleteCalender(
+            @PathVariable Long id,
+            @RequestBody DeleteCalPwdRequest deleteCalPwdRequest
+    ) {
+        calenderService.deleteCalender(id, deleteCalPwdRequest);
+    }
 }
