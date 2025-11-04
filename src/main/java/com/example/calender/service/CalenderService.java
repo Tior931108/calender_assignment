@@ -1,9 +1,6 @@
 package com.example.calender.service;
 
-import com.example.calender.dto.CreateCalenderRequest;
-import com.example.calender.dto.CreateCalenderResponse;
-import com.example.calender.dto.GetUserNameCalenderRequest;
-import com.example.calender.dto.GetUserNameCalenderResponse;
+import com.example.calender.dto.*;
 import com.example.calender.entity.Calender;
 import com.example.calender.repository.CalenderRepository;
 import lombok.RequiredArgsConstructor;
@@ -74,5 +71,22 @@ public class CalenderService {
             dtos.add(dto);
         }
         return dtos;
+    }
+
+    // 선택 일정 조회 (단 건 조회)
+    @Transactional(readOnly = true)
+    public GetOneCalenderResponse getOneCalender(Long id) {
+        Calender calender = calenderRepository.findById(id).orElseThrow(
+                () -> new IllegalStateException("존재하지 않는 일정입니다.")
+        );
+
+        return new GetOneCalenderResponse(
+                calender.getId(),
+                calender.getUserName(),
+                calender.getCalTitle(),
+                calender.getCalContent(),
+                calender.getCreatedAt(),
+                calender.getModifiedAt()
+        );
     }
 }

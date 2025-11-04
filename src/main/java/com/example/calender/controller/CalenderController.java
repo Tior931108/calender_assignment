@@ -1,9 +1,6 @@
 package com.example.calender.controller;
 
-import com.example.calender.dto.CreateCalenderRequest;
-import com.example.calender.dto.CreateCalenderResponse;
-import com.example.calender.dto.GetUserNameCalenderRequest;
-import com.example.calender.dto.GetUserNameCalenderResponse;
+import com.example.calender.dto.*;
 import com.example.calender.service.CalenderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -28,5 +25,11 @@ public class CalenderController {
     public List<GetUserNameCalenderResponse> getAllCalenders(
             @RequestParam(required = false) String userName) {
         return calenderService.findAll(userName);
+    }
+
+    // 선택 일정 조회 (단 건 조회)
+    @GetMapping("/calenders/{id}")
+    public GetOneCalenderResponse getOneCalender(@PathVariable Long id) {
+        return calenderService.getOneCalender(id);
     }
 }
