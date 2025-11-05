@@ -26,7 +26,7 @@ public class Calender extends BaseEntity {
     @Column(length = 200, nullable = false)
     private String calContent;
     @Column(nullable = false)
-    private Integer calPwd;
+    private String calPwd;
 
     // 양방향 매핑
     @OneToMany(mappedBy = "calender", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -55,7 +55,7 @@ public class Calender extends BaseEntity {
     }
 
     // 비밀번호 포함함.
-    public Calender(String userName, String calTitle, String calContent, Integer calPwd) {
+    public Calender(String userName, String calTitle, String calContent, String calPwd) {
         this.userName = userName;
         this.calTitle = calTitle;
         this.calContent = calContent;
@@ -78,7 +78,7 @@ public class Calender extends BaseEntity {
     }
 
     // 비밀번호 검증
-    public boolean isPasswordMatch(Integer rawPwd) {
+    public boolean isPasswordMatch(String rawPwd) {
         if (this.calPwd == null || rawPwd == null) {
             return false;
         }

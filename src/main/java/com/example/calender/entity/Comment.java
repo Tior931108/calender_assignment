@@ -21,7 +21,7 @@ public class Comment extends BaseEntity{
     @Column(length = 100, nullable = false)
     private String comContent;
     @Column(nullable = false)
-    private Integer comPwd;
+    private String comPwd;
 
     // 외래키(FK) : 일정 ID
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,7 +29,7 @@ public class Comment extends BaseEntity{
     private Calender calender;
 
     // 비밀번호 포함한 생성자
-    public Comment(String commentName, String comContent, Integer comPwd, Calender calender) {
+    public Comment(String commentName, String comContent, String comPwd, Calender calender) {
         this.commentName = commentName;
         this.comContent = comContent;
         this.comPwd = comPwd;
