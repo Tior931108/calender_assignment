@@ -3,6 +3,8 @@ package com.example.calender.service;
 import com.example.calender.dto.*;
 import com.example.calender.entity.Calender;
 import com.example.calender.repository.CalenderRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,12 @@ import java.util.stream.Collectors;
 public class CalenderService {
 
     private final CalenderRepository calenderRepository;
+
+    // 수정 메소드에서 수정일자가 첫 시도에는 반영이 안되고,
+    // 두번째 시도에서 반영이 되는 문제점 발견.
+    // @Transactional의 영속성 컨텍스트(1차 캐시)와 JPA Auditing(@LastModifiedDate) 간의 타이밍 문제
+    @PersistenceContext
+    private EntityManager entityManager; // 해결을 flush를 위한 주입
 
     // 저장
     @Transactional
@@ -99,6 +107,10 @@ public class CalenderService {
 
         // 요구사항:  작성일(createdAt)은 변경 불가. modifiedAt 는 Auditing에 의해 자동 갱신.
         calender.updateForTitleAndUser(updateCalenderRequest.getUserName(), updateCalenderRequest.getCalTitle());
+
+        // Auditing의 modifiedAt 즉시 반영
+        // 트랜잭션 내부에서 변경 직후 flush() Auditing이 즉시 반영되고, 리턴 시점에 modifiedAt이 갱신
+        entityManager.flush();
 
         // 응답 DTO
         return new UpdateCalenderResponse(
