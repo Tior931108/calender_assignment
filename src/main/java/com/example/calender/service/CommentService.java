@@ -6,9 +6,13 @@ import com.example.calender.entity.Calender;
 import com.example.calender.entity.Comment;
 import com.example.calender.repository.CalenderRepository;
 import com.example.calender.repository.CommentRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,4 +51,20 @@ public class CommentService {
 
 
     // 특정 일정의 댓글 전체 조회
+    @Transactional(readOnly = true)
+    public List<CommentResponse> getCommentsByCalenderId(Long calId) {
+        // 일정 존재 확인
+        if (!calenderRepository.existsById(calId)) {
+            throw new IllegalStateException("일정을 찾을 수 없습니다.");
+        }
+
+        // 댓글 조회 (작성일 기준 오름차순)
+        List<Comment> comments = commentRepository.findByCalenderIdOrderByCreatedAtAsc(calId);
+
+        // response 반환 : 람다식&스트림으로 구현
+        return  comments.stream()
+                .map(CommentResponse::from)
+                .collect(Collectors.toList());
+    }
+
 }

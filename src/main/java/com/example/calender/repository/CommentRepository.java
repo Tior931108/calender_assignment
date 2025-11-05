@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    // 특정 일정의 댓글 조회 (작성일 기준 내림차순)
-    List<Comment> findByCalenderIdOrderByCreatedAtDesc(Long calId);
+    // 특정 일정의 댓글 조회 (작성일 기준 오름차순)
+    List<Comment> findByCalenderIdOrderByCreatedAtAsc(Long calId);
 
     // 특정 일정의 댓글 갯수 조회
     int countByCalenderId(Long calId);

@@ -76,18 +76,13 @@ public class CalenderService {
     // 선택 일정 조회 (단 건 조회)
     @Transactional(readOnly = true)
     public GetOneCalenderResponse getOneCalender(Long id) {
-        Calender calender = calenderRepository.findById(id).orElseThrow(
+        // fetch 조인문 사용
+        Calender calender = calenderRepository.findByIdWithComments(id).orElseThrow(
                 () -> new IllegalStateException("존재하지 않는 일정입니다.")
         );
 
-        return new GetOneCalenderResponse(
-                calender.getId(),
-                calender.getUserName(),
-                calender.getCalTitle(),
-                calender.getCalContent(),
-                calender.getCreatedAt(),
-                calender.getModifiedAt()
-        );
+        // 단 건 조회시 일정 포함하여 응답
+        return GetOneCalenderResponse.fromCalenderAndComments(calender);
     }
 
     // 수정
