@@ -3,6 +3,7 @@ package com.example.calender.controller;
 import com.example.calender.dto.CommentResponse;
 import com.example.calender.dto.CreateCommentRequest;
 import com.example.calender.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class CommentController {
     @PostMapping("/calenders/{calId}/comments")
     public ResponseEntity<CommentResponse> createComment(
             @PathVariable Long calId,
-            @RequestBody CreateCommentRequest createCommentRequest) {
+            @Valid @RequestBody CreateCommentRequest createCommentRequest) {
         CommentResponse result = commentService.createComment(calId, createCommentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }

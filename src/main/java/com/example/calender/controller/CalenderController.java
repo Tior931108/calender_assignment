@@ -2,6 +2,7 @@ package com.example.calender.controller;
 
 import com.example.calender.dto.*;
 import com.example.calender.service.CalenderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,8 @@ public class CalenderController {
     // 저장
     @PostMapping("/calenders")
     public ResponseEntity<CreateCalenderResponse> createCalender(
-            @RequestBody CreateCalenderRequest createCalenderRequest) {
+            // 유효성 @Valid 추가
+            @Valid @RequestBody CreateCalenderRequest createCalenderRequest) {
         CreateCalenderResponse result = calenderService.save(createCalenderRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
@@ -46,7 +48,7 @@ public class CalenderController {
     @PatchMapping("/calenders/{id}")
     public ResponseEntity<UpdateCalenderResponse> updateCalender(
             @PathVariable Long id,
-            @RequestBody UpdateCalenderRequest updateCalenderRequest
+            @Valid @RequestBody UpdateCalenderRequest updateCalenderRequest
     ) {
         UpdateCalenderResponse result = calenderService.updateCalender(id, updateCalenderRequest);
         return ResponseEntity.status(HttpStatus.OK).body(result);
@@ -59,7 +61,7 @@ public class CalenderController {
     @DeleteMapping("/calenders/{id}")
     public ResponseEntity<Void> deleteCalender(
             @PathVariable Long id,
-            @RequestBody DeleteCalPwdRequest deleteCalPwdRequest
+            @Valid @RequestBody DeleteCalPwdRequest deleteCalPwdRequest
     ) {
         calenderService.deleteCalender(id, deleteCalPwdRequest);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
