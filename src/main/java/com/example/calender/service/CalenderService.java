@@ -86,7 +86,7 @@ public class CalenderService {
     public GetOneCalenderResponse getOneCalender(Long id) {
         // fetch 조인문 사용
         Calender calender = calenderRepository.findByIdWithComments(id).orElseThrow(
-                () -> new IllegalStateException("존재하지 않는 일정입니다.")
+                () -> new IllegalArgumentException("존재하지 않는 일정입니다.")
         );
 
         // 단 건 조회시 일정 포함하여 응답
@@ -97,7 +97,7 @@ public class CalenderService {
     @Transactional
     public UpdateCalenderResponse updateCalender(Long id, UpdateCalenderRequest updateCalenderRequest) {
         Calender calender = calenderRepository.findById(id).orElseThrow(
-                () -> new IllegalStateException("존재하지 않는 일정입니다.")
+                () -> new IllegalArgumentException("존재하지 않는 일정입니다.")
         );
 
         // 비밀번호 검증
@@ -127,7 +127,7 @@ public class CalenderService {
     @Transactional
     public void deleteCalender(Long id, DeleteCalPwdRequest deleteCalPwd) {
         Calender calender = calenderRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 일정입니다. id=" + id));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 일정입니다."));
 
         if (!calender.isPasswordMatch(deleteCalPwd.getCalPwd())) {
             throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
