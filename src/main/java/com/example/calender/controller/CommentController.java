@@ -28,9 +28,9 @@ public class CommentController {
 
     // 특정 일정의 댓글 전체 조회
     @GetMapping("/calenders/{calId}/comments")
-    public ResponseEntity<List<CommentResponse>> getCommentsByCalenderId(
+    public ResponseEntity<List<CommentResponse>> readCommentsByCalenderId(
             @PathVariable Long calId) {
-        List<CommentResponse> results = commentService.getCommentsByCalenderId(calId);
+        List<CommentResponse> results = commentService.readCommentsByCalenderId(calId);
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }
 }

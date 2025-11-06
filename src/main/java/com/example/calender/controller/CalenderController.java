@@ -31,16 +31,16 @@ public class CalenderController {
 
     // 전체 조회 (작성자명 필터링 가능)
     @GetMapping("/calenders")
-    public ResponseEntity<List<GetUserNameCalenderResponse>> getAllCalenders(
+    public ResponseEntity<List<ReadUserNameCalenderResponse>> ReadAllCalenders(
             @RequestParam(required = false) String userName) {
-        List<GetUserNameCalenderResponse> results = calenderService.findAll(userName);
+        List<ReadUserNameCalenderResponse> results = calenderService.findAll(userName);
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }
 
     // 선택 일정 조회 (단 건 조회) - 댓글 내역 포함
     @GetMapping("/calenders/{id}")
-    public ResponseEntity<GetOneCalenderResponse> getOneCalender(@PathVariable Long id) {
-        GetOneCalenderResponse result = calenderService.getOneCalender(id);
+    public ResponseEntity<ReadOneCalenderResponse> ReadOneCalender(@PathVariable Long id) {
+        ReadOneCalenderResponse result = calenderService.readOneCalender(id);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 

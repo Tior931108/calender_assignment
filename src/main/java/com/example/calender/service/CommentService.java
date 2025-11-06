@@ -31,7 +31,7 @@ public class CommentService {
         // 댓글 갯수 제한 확인 : 촤대 10개
         int commentCount = commentRepository.countByCalenderId(calId);
         if (commentCount >= 10) {
-            throw new IllegalStateException("하나의 일정에는 댓글을 10개까지만 작성할 수 있습니다.");
+            throw new IllegalStateException("일정 1개당 댓글을 10개까지만 작성할 수 있습니다.");
         }
 
         // 댓글 생성
@@ -52,7 +52,7 @@ public class CommentService {
 
     // 특정 일정의 댓글 전체 조회
     @Transactional(readOnly = true)
-    public List<CommentResponse> getCommentsByCalenderId(Long calId) {
+    public List<CommentResponse> readCommentsByCalenderId(Long calId) {
         // 일정 존재 확인
         if (!calenderRepository.existsById(calId)) {
             throw new IllegalArgumentException("존재하지 않는 일정입니다.");

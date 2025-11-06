@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -55,7 +54,7 @@ public class CalenderService {
 
     // 전체 조회 (작성자명 필터링)
     @Transactional(readOnly = true)
-    public List<GetUserNameCalenderResponse> findAll(String userName) {
+    public List<ReadUserNameCalenderResponse> findAll(String userName) {
         List<Calender> calenders;
 
         if(userName != null && !userName.isEmpty()) {
@@ -66,9 +65,9 @@ public class CalenderService {
             calenders = calenderRepository.findAllByOrderByModifiedAtDesc();
         }
 
-        List<GetUserNameCalenderResponse> dtos = new ArrayList<>();
+        List<ReadUserNameCalenderResponse> dtos = new ArrayList<>();
         for (Calender calender : calenders) {
-            GetUserNameCalenderResponse dto = new GetUserNameCalenderResponse(
+            ReadUserNameCalenderResponse dto = new ReadUserNameCalenderResponse(
                     calender.getId(),
                     calender.getUserName(),
                     calender.getCalTitle(),
@@ -83,14 +82,14 @@ public class CalenderService {
 
     // 선택 일정 조회 (단 건 조회)
     @Transactional(readOnly = true)
-    public GetOneCalenderResponse getOneCalender(Long id) {
+    public ReadOneCalenderResponse readOneCalender(Long id) {
         // fetch 조인문 사용
         Calender calender = calenderRepository.findByIdWithComments(id).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 일정입니다.")
         );
 
         // 단 건 조회시 일정 포함하여 응답
-        return GetOneCalenderResponse.fromCalenderAndComments(calender);
+        return ReadOneCalenderResponse.fromCalenderAndComments(calender);
     }
 
     // 수정
