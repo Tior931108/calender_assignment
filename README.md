@@ -89,8 +89,8 @@ CalenderApplication.java                  # calender project main
 
 | **API** | **HTTP method** | **URL** |
 | --- | --- | --- |
-| 일정 생성 | POST | /caleders |
-| 일정 전체 조회 | GET | /caleders |
+| 일정 생성 | POST | /calenders |
+| 일정 전체 조회 | GET | /calenders |
 | 일정 필터링 조회 | GET | /calenders?userName=xxx |
 | 일정 단건 조회 | GET | /calenders/{id} |
 | 일정 수정 | PATCH | /calenders/{id} |
