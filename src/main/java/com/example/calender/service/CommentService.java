@@ -26,7 +26,7 @@ public class CommentService {
     public CommentResponse createComment(Long calId, CreateCommentRequest createCommentRequest) {
         // 일정 존재 확인
         Calender calender = calenderRepository.findById(calId)
-                .orElseThrow(() -> new IllegalArgumentException("일정을 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 일정입니다."));
 
         // 댓글 갯수 제한 확인 : 촤대 10개
         int commentCount = commentRepository.countByCalenderId(calId);
@@ -55,7 +55,7 @@ public class CommentService {
     public List<CommentResponse> getCommentsByCalenderId(Long calId) {
         // 일정 존재 확인
         if (!calenderRepository.existsById(calId)) {
-            throw new IllegalStateException("일정을 찾을 수 없습니다.");
+            throw new IllegalArgumentException("존재하지 않는 일정입니다.");
         }
 
         // 댓글 조회 (작성일 기준 오름차순)
