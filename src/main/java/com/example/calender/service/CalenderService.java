@@ -57,7 +57,7 @@ public class CalenderService {
     public List<ReadUserNameCalenderResponse> findAll(String userName) {
         List<Calender> calenders;
 
-        if(userName != null && !userName.isEmpty()) {
+        if (userName != null && !userName.isEmpty()) {
             // 작성자명으로 필터링
             calenders = calenderRepository.findByUserNameOrderByModifiedAtDesc(userName);
         } else {
@@ -88,7 +88,7 @@ public class CalenderService {
                 () -> new IllegalArgumentException("존재하지 않는 일정입니다.")
         );
 
-        // 단 건 조회시 일정 포함하여 응답
+        // 단 건 조회시 댓글 포함하여 응답
         return ReadOneCalenderResponse.fromCalenderAndComments(calender);
     }
 

@@ -62,7 +62,7 @@ public class CommentService {
         List<Comment> comments = commentRepository.findByCalenderIdOrderByCreatedAtAsc(calId);
 
         // response 반환 : 람다식&스트림으로 구현
-        return  comments.stream()
+        return comments.stream()
                 .map(CommentResponse::from)
                 .collect(Collectors.toList());
     }

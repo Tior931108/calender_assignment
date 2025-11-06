@@ -65,6 +65,7 @@ public class Calender extends BaseEntity {
     /**
      * setter
      * 수정 가능한 필드만 반영하도록 update 메서드 구현
+     *
      * @param newUserName
      * @param newCalTitle
      */
