@@ -49,7 +49,7 @@ Spring boot를 활용한 일정 프로젝트 과제입니다.
 - 잘못된 입력이나 요청을 방지 하여 데이터의 `무결성을 보장`함.
 - `일정 제목`은 최대 30자 이내로 제한, 필수값 처리
 - `일정 내용`은 최대 200자 이내로 제한, 필수값 처리
-- `댓글 내용`은 최대 100자 이내로 제한, 필수값 처리=
+- `댓글 내용`은 최대 100자 이내로 제한, 필수값 처리
 - `비밀번호`, 작성자명은 필수값 처리
 - `비밀번호`가 일치하지 않을 경우 적절한 오류 코드 및 메시지 반환
 
@@ -109,7 +109,7 @@ CalenderApplication.java                  # calender project main
 - `controller` : HTTP 요청 매핑, 요청 파라미터 검증, 응답 데이터 변환, 예외 처리 및 에러 응답
 - `service` : 비즈니스 규칙 구현, 데이터 유효성 검증, 여러 데이터 소스 조합, 트랜잭션 경계 설정
 - `repository` : CRUD 연산 구현, 쿼리 최적화, 데이터 매핑
-- `JPA Auditing` : 엔티티의 성성 및 수겅 시간을 자동으로 관리 `@CreateDate` , `@LastModifiedDate`
+- `JPA Auditing` : 엔티티의 성성 및 수정 시간을 자동으로 관리 `@CreateDate` , `@LastModifiedDate`
 - `Calender` - `Comment` 간 연관관계 매핑 (`@OneToMany`, `@ManyToOne`)
 - 엔티티간 조인 사용시 N+1 문제 발생 > `Fetch join`으로 최적화
 - `validation` 의존성 추가로 유효성 검사 기능 활용
